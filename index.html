@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moka & Rosa | Galletas Artesanales</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        beige: {
+                            50: '#FDFBF7',
+                            100: '#F7F3EB',
+                            200: '#EDE4D5',
+                            300: '#D8C9B4',
+                        },
+                        coffee: {
+                            50: '#F4EFEB',
+                            100: '#E4D5C7',
+                            600: '#8C6D53',
+                            700: '#6B4F39',
+                            800: '#4A3525',
+                            900: '#322217',
+                        },
+                        blush: {
+                            100: '#FCE8E6',
+                            200: '#F7D3D0',
+                            300: '#EFA6A1',
+                            400: '#E27B73',
+                            500: '#D1584F'
+                        },
+                        rosePastel: '#F4C2C2',
+                        coffeePastel: '#D7CCC8'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFBF7;
+            color: #322217;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F3EB;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D8C9B4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8C6D53;
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] text-coffee-900 antialiased selection:bg-blush-200 selection:text-coffee-900">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-coffee-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-blush-200 flex items-center justify-center text-coffee-800 shadow-sm group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-cookie-bite text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl font-bold tracking-tight text-coffee-900">Moka & Rosa</span>
+                    <span class="text-[10px] tracking-widest text-coffee-600 uppercase font-medium">Galletas Artesanales</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#inicio" class="text-sm font-medium text-coffee-800 hover:text-blush-500 transition-colors">Inicio</a>
+                <a href="#catalogo" class="text-sm font-medium text-coffee-800 hover:text-blush-500 transition-colors">Catálogo</a>
+                <a href="#sobre-nosotros" class="text-sm font-medium text-coffee-800 hover:text-blush-500 transition-colors">Sobre Nosotros</a>
+                <a href="#contacto" class="text-sm font-medium text-coffee-800 hover:text-blush-500 transition-colors">Contacto</a>
+            </nav>
+
+            <!-- Actions / Cart Button -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="relative bg-white border border-coffee-200 hover:border-blush-300 p-2.5 rounded-full text-coffee-800 shadow-sm hover:shadow transition-all flex items-center justify-center w-11 h-11 focus:outline-none">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-blush-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md scale-0 transition-transform duration-300">0</span>
+                </button>
+                <!-- Mobile menu button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-coffee-800 hover:text-blush-500 focus:outline-none">
+                    <i id="mobile-menu-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-coffee-100 px-6 py-4 space-y-3 shadow-lg">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block text-base font-medium text-coffee-800 hover:text-blush-500">Inicio</a>
+            <a href="#catalogo" onclick="toggleMobileMenu()" class="block text-base font-medium text-coffee-800 hover:text-blush-500">Catálogo</a>
+            <a href="#sobre-nosotros" onclick="toggleMobileMenu()" class="block text-base font-medium text-coffee-800 hover:text-blush-500">Sobre Nosotros</a>
+            <a href="#contacto" onclick="toggleMobileMenu()" class="block text-base font-medium text-coffee-800 hover:text-blush-500">Contacto</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32 bg-gradient-to-b from-[#FDFBF7] to-[#F7F3EB]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-blush-100 border border-blush-200 px-3.5 py-1.5 rounded-full text-blush-500 text-xs font-semibold tracking-wide uppercase shadow-sm">
+                        <i class="fa-solid fa-heart text-[10px]"></i> Horneadas con amor y paciencia
+                    </div>
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-coffee-900 leading-tight">
+                        Momentos dulces que <span class="italic font-normal text-blush-500">abrazan</span> el alma.
+                    </h1>
+                    <p class="text-base sm:text-lg text-coffee-700 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+                        Galletas artesanales crujientes por fuera, suaves y chiclosas por dentro. Ingredientes 100% naturales, rellenos irresistibles y un toque de magia en cada horneada.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#catalogo" class="w-full sm:w-auto bg-coffee-800 hover:bg-coffee-900 text-white font-medium px-8 py-4 rounded-full shadow-lg shadow-coffee-800/20 hover:shadow-xl transition-all text-center">
+                            Pide tus favoritas
+                        </a>
+                        <a href="#sobre-nosotros" class="w-full sm:w-auto bg-white border border-coffee-200 hover:border-coffee-300 text-coffee-800 font-medium px-8 py-4 rounded-full shadow-sm transition-all text-center">
+                            Conoce nuestra historia
+                        </a>
+                    </div>
+                    <!-- Highlights stats -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-coffee-200/60 max-w-md mx-auto lg:mx-0">
+                        <div>
+                            <p class="font-serif text-2xl font-bold text-coffee-900">100%</p>
+                            <p class="text-xs text-coffee-600">Artesanales</p>
+                        </div>
+                        <div>
+                            <p class="font-serif text-2xl font-bold text-coffee-900">+12</p>
+                            <p class="text-xs text-coffee-600">Variedades</p>
+                        </div>
+                        <div>
+                            <p class="font-serif text-2xl font-bold text-coffee-900">Diario</p>
+                            <p class="text-xs text-coffee-600">Horne fresco</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image Collage -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="absolute -top-4 -left-4 w-72 h-72 bg-blush-200/50 rounded-full blur-3xl -z-10"></div>
+                        <div class="absolute -bottom-4 -right-4 w-72 h-72 bg-coffee-100/60 rounded-full blur-3xl -z-10"></div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-4">
+                                <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=600" alt="Galleta artesanal de chocolate" class="rounded-3xl shadow-lg object-cover w-full h-48 sm:h-64 hover:scale-[1.02] transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/D7CCC8/322217?text=Galleta+Moka'">
+                                <img src="" alt="Oreo White Crunch" class="rounded-3xl shadow-lg object-cover w-full h-36 sm:h-48 hover:scale-[1.02] transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/F4C2C2/322217?text=Galleta+Rosa'">
+                            </div>
+                            <div class="space-y-4 pt-8">
+                                <img src="https://images.unsplash.com/photo-1618897996318-5a901fa6ca71?auto=format&fit=crop&q=80&w=600" alt="Galleta con chispas" class="rounded-3xl shadow-lg object-cover w-full h-36 sm:h-48 hover:scale-[1.02] transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/EDE4D5/322217?text=Galleta+Vainilla'">
+                                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600" alt="Galletas recién horneadas" class="rounded-3xl shadow-lg object-cover w-full h-48 sm:h-64 hover:scale-[1.02] transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/D8C9B4/322217?text=Artesanal'">
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-6 py-3 rounded-2xl shadow-xl border border-coffee-100 flex items-center gap-3">
+                            <span class="flex h-3 w-3 relative">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blush-400 opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-3 w-3 bg-blush-500"></span>
+                            </span>
+                            <span class="text-xs font-semibold text-coffee-900">¡Recién salidas del horno hoy!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="catalogo" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-blush-500 text-xs font-bold uppercase tracking-widest block mb-2">Nuestras Creaciones</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-coffee-900">Catálogo Artesanal</h2>
+                <p class="text-coffee-600 text-sm sm:text-base mt-3">Elige tu sabor favorito o combínalos en nuestra caja especial de regalo.</p>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
+                <button onclick="filterCatalog('todos')" class="filter-btn active-filter px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-coffee-800 text-white shadow-sm" data-category="todos">
+                    Todas
+                </button>
+                <button onclick="filterCatalog('chocolate')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-coffee-50 hover:bg-coffee-100 text-coffee-800" data-category="chocolate">
+                    Chocolate
+                </button>
+                <button onclick="filterCatalog('oreo')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-coffee-50 hover:bg-coffee-100 text-coffee-800" data-category="oreo">
+                    Oreo & Crema
+                </button>
+                <button onclick="filterCatalog('vainilla')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-coffee-50 hover:bg-coffee-100 text-coffee-800" data-category="vainilla">
+                    Vainilla & Nuez
+                </button>
+                <button onclick="filterCatalog('especiales')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-coffee-50 hover:bg-coffee-100 text-coffee-800" data-category="especiales">
+                    Especiales Rosa
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products will be dynamically loaded via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="sobre-nosotros" class="py-20 bg-[#F7F3EB] relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-6 relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800" alt="Horneando galletas artesanales" class="w-full h-[400px] sm:h-[480px] object-cover" onerror="this.src='https://placehold.co/800x600/D7CCC8/322217?text=Moka+%26+Rosa+Kitchen'">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl border border-coffee-100 hidden sm:block max-w-xs">
+                        <p class="font-serif italic text-coffee-900 text-sm font-medium">"A veces quererse es sentarse un rato y disfrutar algo dulce."</p>
+                        <span class="block text-xs text-blush-500 font-semibold mt-2">— Filosofía Moka & Rosa</span>
+                    </div>
+                </div>
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-blush-500 text-xs font-bold uppercase tracking-widest block">Sobre Nosotros</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-coffee-900">
+                        El arte de hornear con pasión y detalles delicados.
+                    </h2>
+                    <p class="text-coffee-700 text-base leading-relaxed font-light">
+                        En Moka & Rosa creemos que cada galleta cuenta una historia. Comenzamos en una pequeña cocina familiar con el sueño de recrear los sabores reconfortantes de la infancia pero con un toque moderno, elegante y sofisticado.
+                    </p>
+                    <p class="text-coffee-700 text-base leading-relaxed font-light">
+                        Seleccionamos cuidadosamente chocolate belga, mantequilla artesanal de primera calidad y vainilla natural de Madagascar. Cada lote es amasado a mano y horneado en el punto exacto para garantizar una textura inolvidable.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blush-100 flex items-center justify-center text-blush-500 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-seedling text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-900 text-sm">Ingredientes 100% Reales</h4>
+                                <p class="text-xs text-coffee-600 mt-0.5">Sin conservantes artificiales ni químicos.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blush-100 flex items-center justify-center text-blush-500 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-gift text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-900 text-sm">Empaque de Regalo</h4>
+                                <p class="text-xs text-coffee-600 mt-0.5">Cajas estéticas listas para sorprender.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contacto" class="bg-coffee-900 text-beige-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="space-y-4 md:col-span-1">
+                    <div class="flex items-center gap-2">
+                        <div class="w-9 h-9 rounded-full bg-blush-500 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-cookie-bite"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold text-white">Moka & Rosa</span>
+                    </div>
+                    <p class="text-xs text-beige-300 leading-relaxed">
+                        Galletas artesanales creadas para endulzar tus mejores momentos del día.
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="#" class="w-9 h-9 rounded-full bg-coffee-800 hover:bg-blush-500 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-coffee-800 hover:bg-blush-500 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-tiktok text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-coffee-800 hover:bg-blush-500 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-serif text-white font-semibold text-base mb-4">Enlaces Rápidos</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#inicio" class="hover:text-blush-400 transition-colors">Inicio</a></li>
+                        <li><a href="#catalogo" class="hover:text-blush-400 transition-colors">Catálogo de Galletas</a></li>
+                        <li><a href="#sobre-nosotros" class="hover:text-blush-400 transition-colors">Sobre Nosotros</a></li>
+                        <li><a href="#contacto" class="hover:text-blush-400 transition-colors">Contacto y Pedidos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif text-white font-semibold text-base mb-4">Horarios de Horneado</h4>
+                    <ul class="space-y-2.5 text-xs text-beige-300">
+                        <li>Lunes a Viernes: 9:00 AM - 7:00 PM</li>
+                        <li>Sábados: 10:00 AM - 6:00 PM</li>
+                        <li>Domingos: Pedidos especiales anticipados</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif text-white font-semibold text-base mb-4">Newsletter Dulce</h4>
+                    <p class="text-xs text-beige-300 mb-3">Suscríbete para enterarte de nuevos sabores y descuentos sorpresa.</p>
+                    <form onsubmit="handleNewsletter(event)" class="space-y-2">
+                        <input type="email" placeholder="Tu correo electrónico" required class="w-full bg-coffee-800 border border-coffee-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-beige-300 focus:outline-none focus:border-blush-400">
+                        <button type="submit" class="w-full bg-blush-500 hover:bg-blush-400 text-white font-medium py-2.5 rounded-xl text-xs transition-colors shadow-md">
+                            Suscribirme
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-coffee-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-beige-300">
+                <p>&copy; 2026 Moka & Rosa Artesanal Cookies. Todos los derechos reservados.</p>
+                <p class="mt-2 sm:mt-0">Diseñado con estilo y ternura para amantes de las galletas.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slide-over Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <!-- Backdrop -->
+        <div id="cart-backdrop" onclick="toggleCart()" class="absolute inset-0 bg-coffee-900/50 backdrop-blur-sm transition-opacity opacity-0 duration-300"></div>
+
+        <!-- Drawer Content -->
+        <div id="cart-panel" class="absolute inset-y-0 right-0 max-w-full flex pl-10 transform translate-x-full transition-transform duration-300 ease-in-out">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                <!-- Drawer Header -->
+                <div class="p-6 border-b border-coffee-100 flex items-center justify-between bg-beige-50">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-blush-500 text-lg"></i>
+                        <h3 class="font-serif text-xl font-bold text-coffee-900">Tu Carrito</h3>
+                        <span id="cart-count-badge" class="ml-2 bg-blush-100 text-blush-500 text-xs font-bold px-2.5 py-0.5 rounded-full">0 items</span>
+                    </div>
+                    <button onclick="toggleCart()" class="p-2 text-coffee-600 hover:text-coffee-900 rounded-full hover:bg-coffee-100/50 transition-colors">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Body / Items List -->
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-coffee-100">
+                    <!-- Dynamic cart items will appear here -->
+                </div>
+
+                <!-- Drawer Footer / Summary -->
+                <div class="p-6 border-t border-coffee-100 bg-beige-50 space-y-4">
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between text-coffee-700">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal" class="font-semibold text-coffee-900">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-coffee-700">
+                            <span>Empaque de regalo especial</span>
+                            <span class="text-blush-500 font-medium">¡Gratis!</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-coffee-900 pt-2 border-t border-coffee-200">
+                            <span>Total</span>
+                            <span id="cart-total" class="text-blush-500">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button onclick="checkoutOrder()" id="checkout-btn" class="w-full bg-coffee-800 hover:bg-coffee-900 disabled:bg-coffee-300 text-white font-medium py-3.5 rounded-2xl shadow-lg transition-all text-center flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-lock text-xs"></i> Finalizar Pedido por WhatsApp
+                    </button>
+                    <p class="text-[11px] text-center text-coffee-600">Te redirigiremos con tu pedido listo para enviar.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Checkout Success Modal -->
+    <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-coffee-900/60 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-3xl p-8 max-w-sm mx-4 text-center relative z-10 shadow-2xl border border-coffee-100 animate-in fade-in zoom-in duration-300">
+            <div class="w-16 h-16 bg-blush-100 text-blush-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-sm">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-coffee-900 mb-2">¡Pedido Registrado!</h3>
+            <p id="success-message" class="text-sm text-coffee-700 mb-6">Gracias por elegir Moka & Rosa. Tu selección de galletas artesanales está lista para hornearse con amor.</p>
+            <button onclick="closeSuccessModal()" class="w-full bg-coffee-800 hover:bg-coffee-900 text-white font-medium py-3 rounded-xl text-sm transition-colors shadow-md">
+                Volver a la tienda
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-coffee-900 text-white px-6 py-3 rounded-2xl shadow-2xl text-xs font-medium z-50 flex items-center gap-3 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
+        <i class="fa-solid fa-check-circle text-blush-400 text-sm"></i>
+        <span id="toast-text">Producto agregado al carrito</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Product Catalog Data
+        const products = [
+            {
+                id: 1,
+                name: "Moka Choco Belga",
+                category: "chocolate",
+                price: 4.50,
+                rating: 4.9,
+                reviews: 124,
+                description: "Galleta crujiente rellena de ganache de chocolate belga 70% cacao y notas de café espresso.",
+                image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=600"
+            },
+            {
+                id: 2,
+                name: "Oreo Dream Cream",
+                category: "oreo",
+                price: 4.80,
+                rating: 5.0,
+                reviews: 98,
+                description: "Base de galleta de chocolate oscuro con trozos generosos de galleta Oreo y centro de crema de vainilla.",
+                image: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&q=80&w=600"
+            },
+            {
+                id: 3,
+                name: "Vainilla Macadamia",
+                category: "vainilla",
+                price: 4.20,
+                rating: 4.8,
+                reviews: 86,
+                description: "Suave galleta de mantequilla con vainilla pura de Madagascar y trocitos tostados de nuez macadamia.",
+                image: "https://images.unsplash.com/photo-1618897996318-5a901fa6ca71?auto=format&fit=crop&q=80&w=600"
+            },
+            {
+                id: 4,
+                name: "Rosa Velvet & White Choco",
+                category: "especiales",
+                price: 5.00,
+                rating: 4.9,
+                reviews: 156,
+                description: "Edición especial con toque de Red Velvet, color pastel suave y generosos chips de chocolate blanco.",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600"
+            },
+            {
+                id: 5,
+                name: "Doble Chocolate Fudge",
+                category: "chocolate",
+                price: 4.60,
+                rating: 4.7,
+                reviews: 72,
+                description: "Para los verdaderos amantes del chocolate intenso, con centro fundido y sal marina en hojuelas.",
+                image: "https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=600"
+            },
+            {
+                id: 6,
+                name: "Oreo White Crunch",
+                category: "oreo",
+                price: 4.80,
+                rating: 4.9,
+                reviews: 64,
+                description: "Galleta de vainilla mantequillosa con trozos de Oreo Golden y cubierta de chocolate blanco.",
+                image: "https://doughnottsofficial.com/cdn/shop/files/whitechocoreocrunchbigboy_1000x.jpg?v=1772016814"
+            }
+        ];
+
+        // Shopping Cart State
+        let cart = [];
+
+        // DOM Loaded Init
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            updateCartUI();
+        });
+
+        // Render Product Catalog Cards
+        function renderProducts(items) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            if(items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-coffee-600">No se encontraron galletas en esta categoría.</div>`;
+                return;
+            }
+
+            items.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-[#FDFBF7] rounded-3xl p-5 border border-coffee-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden rounded-2xl mb-4 aspect-4/3 bg-beige-200">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/D7CCC8/322217?text=Moka+%26+Rosa'">
+                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-semibold text-coffee-900 shadow-sm">
+                                <i class="fa-solid fa-star text-amber-400 mr-1"></i>${product.rating} (${product.reviews})
+                            </span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-coffee-900 mb-1 group-hover:text-blush-500 transition-colors">${product.name}</h3>
+                        <p class="text-xs text-coffee-600 line-clamp-2 leading-relaxed mb-4">${product.description}</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-200/50">
+                        <div>
+                            <span class="text-[10px] text-coffee-600 uppercase block">Precio</span>
+                            <span class="font-serif text-lg font-bold text-coffee-900">$${product.price.toFixed(2)}</span>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="bg-coffee-800 hover:bg-blush-500 text-white p-3 rounded-2xl shadow-md transition-all duration-300 flex items-center justify-center w-11 h-11 focus:outline-none hover:scale-105">
+                            <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Catalog by Category
+        function filterCatalog(category) {
+            // Update active button styling
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if(btn.dataset.category === category) {
+                    btn.className = "filter-btn active-filter px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-coffee-800 text-white shadow-sm";
+                } else {
+                    btn.className = "filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-coffee-50 hover:bg-coffee-100 text-coffee-800";
+                }
+            });
+
+            if(category === 'todos') {
+                renderProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+        }
+
+        // Add Product to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if(existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`¡Agregado: ${product.name}!`);
+        }
+
+        // Update Cart Quantities
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if(item) {
+                item.quantity += change;
+                if(item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+            }
+            updateCartUI();
+        }
+
+        // Update Cart UI & Badges
+        function updateCartUI() {
+            const badge = document.getElementById('cart-badge');
+            const countBadge = document.getElementById('cart-count-badge');
+            const container = document.getElementById('cart-items-container');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const totalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // Badge updates
+            if(totalItems > 0) {
+                badge.textContent = totalItems;
+                badge.classList.remove('scale-0');
+            } else {
+                badge.classList.add('scale-0');
+            }
+
+            countBadge.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
+            subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+            totalEl.textContent = `$${subtotal.toFixed(2)}`;
+
+            if(totalItems === 0) {
+                checkoutBtn.disabled = true;
+                container.innerHTML = `
+                    <div class="text-center py-16 space-y-3">
+                        <div class="w-16 h-16 bg-beige-100 text-coffee-400 rounded-full flex items-center justify-center mx-auto text-xl">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+                        <p class="text-sm font-medium text-coffee-800">Tu carrito está vacío</p>
+                        <p class="text-xs text-coffee-600">Explora nuestro catálogo y añade algunas galletas deliciosas.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            container.innerHTML = '';
+
+            cart.forEach(item => {
+                const row = document.createElement('div');
+                row.className = "py-4 flex items-center gap-4";
+                row.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-2xl object-cover bg-beige-200 border border-coffee-100 flex-shrink-0" onerror="this.src='https://placehold.co/100x100/D7CCC8/322217?text=Galleta'">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-serif font-bold text-coffee-900 text-sm truncate">${item.name}</h4>
+                        <p class="text-xs text-blush-500 font-semibold mt-0.5">$${item.price.toFixed(2)}</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-full bg-coffee-100 hover:bg-coffee-200 text-coffee-800 flex items-center justify-center text-xs transition-colors">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <span class="text-xs font-bold text-coffee-900 w-6 text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 rounded-full bg-coffee-100 hover:bg-coffee-200 text-coffee-800 flex items-center justify-center text-xs transition-colors">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-serif font-bold text-coffee-900 text-sm">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Toggle Slide-over Cart Drawer
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            const panel = document.getElementById('cart-panel');
+
+            if(drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    backdrop.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                backdrop.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                icon.className = "fa-solid fa-bars text-xl";
+            } else {
+                icon.className = "fa-solid fa-xmark text-xl";
+            }
+        }
+
+        // Toast Notification Function
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const text = document.getElementById('toast-text');
+            text.textContent = message;
+
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Checkout Order (opens success modal and resets cart)
+        function checkoutOrder() {
+            toggleCart();
+            const modal = document.getElementById('success-modal');
+            modal.classList.remove('hidden');
+            cart = [];
+            updateCartUI();
+        }
+
+        // Close Success Modal
+        function closeSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            modal.classList.add('hidden');
+        }
+
+        // Newsletter Handler
+        function handleNewsletter(event) {
+            event.preventDefault();
+            showToast('¡Gracias por suscribirte a Moka & Rosa!');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
